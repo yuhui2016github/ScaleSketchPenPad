@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:weightSum="7"
+    tools:context="com.pay.chaofun.chaofunskechpen.MainActivity">
+
+
+    <LinearLayout
+        android:id="@+id/ll_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:orientation="vertical">
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/pen_strock"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="setPenStrock"
+                android:text="@string/penstrock" />
+
+            <Button
+                android:id="@+id/pen_color"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="setPenClor"
+                android:text="@string/pencolor" />
+
+            <Button
+                android:id="@+id/undo_path"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="undoPath"
+                android:text="@string/undo" />
+
+            <Button
+                android:id="@+id/eraser"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="setEraser"
+                android:text="橡皮" />
+
+
+            <Button
+                android:id="@+id/select_photo_from_galery"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="chooseGalleryPhoto"
+                android:text="@string/album" />
+
+            <Button
+                android:id="@+id/select_photo_from_camera"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="capture"
+                android:text="@string/camera" />
+
+            <Button
+                android:id="@+id/save_result"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="saveResultImage"
+                android:text="@string/saveresult" />
+        </LinearLayout>
+
+        <com.pay.chaofun.chaofunskechpen.widget.PenStrockAndColorSelect
+            android:id="@+id/strock_color_select"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></com.pay.chaofun.chaofunskechpen.widget.PenStrockAndColorSelect>
+    </RelativeLayout>
+
+
+</LinearLayout>

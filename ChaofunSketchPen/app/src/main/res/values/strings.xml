@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ChaofunSkechPen</string>
+
+    <string name="selectcolor_done">Done</string>
+    <string name="selectcolor_cancel">Cancel</string>
+    <string name="saveresult">保存</string>
+    <string name="undo">撤销</string>
+    <string name="album">相册</string>
+    <string name="camera">相机</string>
+    <string name="pencolor">颜色</string>
+    <string name="penstrock">粗细</string>
+</resources>
