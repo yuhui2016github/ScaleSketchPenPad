@@ -68,7 +68,7 @@
 1. 画笔的细节不说了，可以去Paint  API找
 2. 橡皮擦的效果 Paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
 
-	PorterDuff.Mode一共有16八种混合模式，我全都试过，有兴趣的可以试试效果
+	PorterDuff.Mode一共有16种混合模式，我全都试过，有兴趣的可以试试效果
 	
 	本项目使用 PorterDuff.Mode.DST_CLEAR 实现橡皮擦效果
 
