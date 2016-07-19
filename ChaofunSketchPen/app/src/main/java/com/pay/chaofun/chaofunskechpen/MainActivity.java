@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layoutParams.addRule(Gravity.CENTER);
         mainRL.addView(mBorderView, layoutParams);
-        mBorderView.setCutoutImage(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        mBorderView.setCutoutImage(BitmapFactory.decodeResource(getResources(), R.mipmap.zgc));
 
 
         mPenStockAndColor = (PenStrockAndColorSelect) findViewById(R.id.strock_color_select);
