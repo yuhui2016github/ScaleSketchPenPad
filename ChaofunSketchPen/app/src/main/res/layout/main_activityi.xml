@@ -59,6 +59,14 @@
                 android:text="@string/undo" />
 
             <Button
+                android:id="@+id/redo_path"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:onClick="redoPath"
+                android:text="@string/redo" />
+
+            <Button
                 android:id="@+id/eraser"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

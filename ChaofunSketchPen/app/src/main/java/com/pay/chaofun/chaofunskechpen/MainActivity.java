@@ -112,6 +112,10 @@ public class MainActivity extends AppCompatActivity {
         mBorderView.undo();
     }
 
+    public void redoPath(View view) {
+        mBorderView.redo();
+    }
+
     public void chooseGalleryPhoto(View view) {
         Intent picture = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(picture, PICTURE_REQUEST_GALLERY);

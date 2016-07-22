@@ -13,7 +13,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-
 import java.util.ArrayList;
 
 /**
@@ -25,6 +24,7 @@ public class LineView extends View {
     private float mCurrentLineWidth = MarkPath.NORMAL_LINE_WIDTH;
     private boolean mIsDoubleTouch = false;
 
+    private int mPathCount = 0;
     private ArrayList<MarkPath> mFinishedPaths;
     private MarkPath mCurrentPath = null;
 
@@ -104,27 +104,33 @@ public class LineView extends View {
     }
 
 
-
-
     /**
      * 撤销 上一个MarkPath 对象画的线
      */
     public void undo() {
-        if (mFinishedPaths.size() > 0 && mFinishedPaths != null) {
-            mFinishedPaths.remove(mFinishedPaths.size() - 1);
-
+        if (mPathCount > 0) {
+            mPathCount--;
         }
         invalidate();
     }
 
+    public void redo() {
+        if (mFinishedPaths != null && mFinishedPaths.size() > 0) {
+            if (mPathCount < mFinishedPaths.size()) {
+                mPathCount++;
+            }
+        }
+        invalidate();
+    }
 
 
     public Bitmap getBCResutlImage(RectF clipRect, PointF srcSize) {
         Bitmap drawBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(drawBitmap);
         canvas.drawColor(Color.TRANSPARENT);
-        for (MarkPath path : mFinishedPaths) {
-            path.drawBCResultPath(canvas);
+        for (int i = 0; i < mPathCount; i++) {
+            mFinishedPaths.get(i).drawBCResultPath(canvas);
+            ;
         }
 
         Bitmap clipBitmap = Bitmap.createBitmap(drawBitmap, (int) clipRect.left, (int) clipRect.top, (int) clipRect.right, (int) clipRect.bottom, null, false);
@@ -161,7 +167,16 @@ public class LineView extends View {
             case MotionEvent.ACTION_UP:
                 if (mCurrentPath != null && mIsDoubleTouch != true) {
                     mCurrentPath.addMarkPointToPath(mCurrentPoint);
+                    //如果是点击了撤销后，撤销的笔画移出栈，并将新的笔画压入栈
+                    if (mPathCount < mFinishedPaths.size()) {
+                        int oldSize = mFinishedPaths.size();
+                        for (int i = oldSize; i > mPathCount; i--) {
+                            mFinishedPaths.remove(i - 1);
+                        }
+                    }
                     mFinishedPaths.add(mCurrentPath);
+
+                    mPathCount++;
                 }
 
                 mIsDoubleTouch = false;
@@ -185,13 +200,14 @@ public class LineView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //清空Bitmap画布
         mTempCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
         width = getWidth();
         height = getHeight();
         if (mFinishedPaths.size() >= 0) {
-            for (MarkPath path : mFinishedPaths) {
-                path.drawMarkPath(mTempCanvas);
+            for (int i = 0; i < mPathCount; i++) {
+                mFinishedPaths.get(i).drawMarkPath(mTempCanvas);
             }
         }
 

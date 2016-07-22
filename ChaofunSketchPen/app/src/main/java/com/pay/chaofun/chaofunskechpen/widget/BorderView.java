@@ -96,10 +96,12 @@ public class BorderView extends RelativeLayout {
 
 
     public void undo() {
-
         mLineView.undo();
     }
 
+    public void redo() {
+        mLineView.redo();
+    }
 
     public Bitmap getResultBitmap() {
 
