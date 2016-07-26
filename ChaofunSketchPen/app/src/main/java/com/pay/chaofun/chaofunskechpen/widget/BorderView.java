@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -33,6 +34,7 @@ public class BorderView extends RelativeLayout {
     private PointF mOldPointer = null;
     private float initImageWidth;
     private float initImageHeight;
+//    private boolean startScale = false;
 
     @SuppressLint("ClickableViewAccessibility")
     public BorderView(Context context, AttributeSet attrs, int defStyle) {
@@ -118,14 +120,13 @@ public class BorderView extends RelativeLayout {
         Bitmap bitmap = mLineView.getBCResutlImage(clipRect, srcSize);
 
 
-        Bitmap resultBitmap=Bitmap.createBitmap(mCutoutImage.getWidth(),mCutoutImage.getHeight(), Bitmap.Config.ARGB_4444);
-        Canvas canvas=new Canvas(resultBitmap);
-        canvas.drawBitmap(mCutoutImage,0,0,null);
-        canvas.drawBitmap(bitmap,0,0,null);
+        Bitmap resultBitmap = Bitmap.createBitmap(mCutoutImage.getWidth(), mCutoutImage.getHeight(), Bitmap.Config.ARGB_4444);
+        Canvas canvas = new Canvas(resultBitmap);
+        canvas.drawBitmap(mCutoutImage, 0, 0, null);
+        canvas.drawBitmap(bitmap, 0, 0, null);
 
         return resultBitmap;
     }
-
 
 
     @Override
@@ -135,27 +136,36 @@ public class BorderView extends RelativeLayout {
                 return mLineView.onTouchEvent(event);
 
             case MotionEvent.ACTION_POINTER_DOWN:
+                Log.i("yuhui", "ACTION_POINTER_DOWN");
                 mIsDrag = true;
                 mOldDistance = TouchEventUtil.spacingOfTwoFinger(event);
                 mOldPointer = TouchEventUtil.middleOfTwoFinger(event);
+                //设置放大和旋转的中心
+//                mShowView.setPivotX((event.getX(0) + event.getX(1)) / 2);
+//                mShowView.setPivotY((event.getY(0) + event.getY(1)) / 2);
+//                startScale = false;
                 break;
 
             case MotionEvent.ACTION_MOVE:
+
                 if (!mIsDrag) return mLineView.onTouchEvent(event);
                 if (event.getPointerCount() != 2) break;
                 float newDistance = TouchEventUtil.spacingOfTwoFinger(event);
                 float scaleFactor = newDistance / mOldDistance;
                 scaleFactor = checkingScale(mShowView.getScaleX(), scaleFactor);
-                mShowView.setScaleX(mShowView.getScaleX() * scaleFactor);
-                mShowView.setScaleY(mShowView.getScaleY() * scaleFactor);
+//                if (startScale) {
+                    mShowView.setScaleX(mShowView.getScaleX() * scaleFactor);
+                    mShowView.setScaleY(mShowView.getScaleY() * scaleFactor);
+//                }
                 mOldDistance = newDistance;
 
                 PointF newPointer = TouchEventUtil.middleOfTwoFinger(event);
                 mShowView.setX(mShowView.getX() + newPointer.x - mOldPointer.x);
                 mShowView.setY(mShowView.getY() + newPointer.y - mOldPointer.y);
+                Log.i("yuhui", "ACTION_MOVE x distance" + (newPointer.x - mOldPointer.x));
                 mOldPointer = newPointer;
                 checkingBorder();
-
+//                startScale = true;
                 break;
 
             case MotionEvent.ACTION_POINTER_UP:
@@ -203,7 +213,6 @@ public class BorderView extends RelativeLayout {
         mLineView = new LineView(getContext());
         RelativeLayout.LayoutParams lineViewParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
                 RelativeLayout.LayoutParams.MATCH_PARENT);
-
 
 
         mShowView.addView(mImageView, imageViewParams);
